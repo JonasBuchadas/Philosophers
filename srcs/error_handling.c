@@ -38,6 +38,7 @@ static void	free_table(t_table *table)
 	{
 		free(table->forks);
 		free(table->seats);
+		free(table->f_taken);
 		free(table);
 	}
 	return ;

@@ -5,11 +5,14 @@
 # include <sys/time.h>
 # include <stdbool.h>
 # include <pthread.h>
+# include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 
+# define LEFT_FORK 0
+# define RIGHT_FORK 1
 # define SUCCESS 0
 # define MALLOC 1
 # define NUM_OF_ARGS 2
@@ -20,11 +23,15 @@
 
 typedef struct s_seat
 {
-	pthread_t	philosopher;
+	pthread_t	philo;
 	int			id;
+	int			time_seated;
 	int			must_eat;
 	mutex_t		*left_fork;
 	mutex_t		*right_fork;
+	bool		*l_f_taken;
+	bool		*r_f_taken;
+	bool		forks_taken;
 }	t_seat;
 
 typedef struct s_table
@@ -37,17 +44,20 @@ typedef struct s_table
 	bool			opt_arg;
 	t_seat			*seats;
 	mutex_t			*forks;
+	bool			*f_taken;
 }	t_table;
 
 int				exit_philo(t_table *table, int error_code);
 int				exit_message(t_table *table, int error_code, char *msg);
 void			*dinner();
-
+void			arrange_table(t_table *t);
 unsigned int	ft_atoui(const char *str);
 int				ft_atoi(const char *str);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t			ft_strlen(const char *s);
+
+int get_current_time(void);
 
 #endif
