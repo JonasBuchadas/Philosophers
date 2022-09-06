@@ -4,9 +4,11 @@ static void	take_forks(t_seat *seat);
 static void	put_fork(t_seat *seat, int fork);
 static void	take_fork(t_seat *seat, int fork);
 
-void *dinner(void *arg)
+void	*dinner(void *arg)
 {
-	t_seat *seat = (t_seat *)arg;
+	t_seat	*seat;
+
+	seat = (t_seat *)arg;
 	while (seat->must_eat != 0)
 	{
 		message(seat, THINKING);
@@ -23,7 +25,7 @@ void *dinner(void *arg)
 	return (NULL);
 }
 
-static void take_forks(t_seat *seat)
+static void	take_forks(t_seat *seat)
 {
 	while (seat->forks_taken == false)
 	{
@@ -54,7 +56,7 @@ static void take_forks(t_seat *seat)
 	}
 }
 
-static void take_fork(t_seat *seat, int fork)
+static void	take_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 	{
@@ -68,7 +70,7 @@ static void take_fork(t_seat *seat, int fork)
 	}
 }
 
-static void put_fork(t_seat *seat, int fork)
+static void	put_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 	{

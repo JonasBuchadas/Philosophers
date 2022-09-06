@@ -1,6 +1,6 @@
 #include "philo.h"
 
-void message(t_seat *seat, int status)
+void	message(t_seat *seat, int status)
 {
 	pthread_mutex_lock(seat->message);
 	if (status == THINKING)

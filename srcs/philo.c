@@ -72,15 +72,16 @@ static int	set_table(t_table *t)
 
 static int	start_dinner(t_table *t)
 {
-	int	i;
-	long long start_time;
+	int			i;
+	long long	start_time;
 
 	start_time = get_current_time(0);
 	i = -1;
 	while (++i < t->philo_number)
 	{
 		t->seats[i].time_started = start_time;
-		if (pthread_create(&t->seats[i].philo, NULL, &dinner, &t->seats[i]) != 0)
+		if (pthread_create(&t->seats[i].philo, NULL,
+				&dinner, &t->seats[i]) != 0)
 			return (exit_message(t, THREAD, "Error while making thread"));
 	}
 	i = -1;

@@ -3,7 +3,7 @@
 static void	arrange_seats(t_table *t);
 static void	arrange_forks(t_table *t);
 
-void arrange_table(t_table *t)
+void	arrange_table(t_table *t)
 {
 	arrange_seats(t);
 	arrange_forks(t);
@@ -11,7 +11,7 @@ void arrange_table(t_table *t)
 
 static void	arrange_seats(t_table *t)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < t->philo_number)
