@@ -18,6 +18,7 @@ static void	arrange_seats(t_table *t)
 	{
 		t->seats[i].id = i + 1;
 		t->seats[i].forks_taken = false;
+		t->seats[i].message = &t->message;
 		if (t->opt_arg == true)
 			t->seats[i].must_eat = t->must_eat_number;
 		else

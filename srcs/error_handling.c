@@ -34,11 +34,22 @@ int	exit_message(t_table *table, int error_code, char *msg)
 
 static void	free_table(t_table *table)
 {
+	int	i;
+
 	if (table != NULL)
 	{
-		free(table->forks);
-		free(table->seats);
-		free(table->f_taken);
+		if (table->forks)
+		{
+			i = -1;
+			while (++i < table->philo_number)
+				pthread_mutex_destroy(table->forks + i);
+			free(table->forks);
+		}
+		if (table->seats)
+			free(table->seats);
+		if (table->f_taken)
+			free(table->f_taken);
+		pthread_mutex_destroy(&table->message);
 		free(table);
 	}
 	return ;

@@ -19,7 +19,8 @@ SRC_NAME=		$(NAME).c
 SRCS=			arrange_table.c \
 				error_handling.c \
 				actions.c \
-				time.c \
+				messages.c \
+				get_time.c \
 				ft_atoi.c \
 				ft_atoui.c \
 				ft_putstr_fd.c \
