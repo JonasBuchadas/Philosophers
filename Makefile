@@ -18,9 +18,11 @@ SRC_NAME=		$(NAME).c
 #SRC_BONUS=		$(NAME)_bonus.c
 SRCS=			arrange_table.c \
 				error_handling.c \
+				dinner.c \
 				actions.c \
 				messages.c \
 				get_time.c \
+				supervision.c \
 				ft_atoi.c \
 				ft_atoui.c \
 				ft_putstr_fd.c \
