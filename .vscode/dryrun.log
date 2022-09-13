@@ -1,0 +1,21 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/jonas/42/Philosophers'
+mkdir -p objs/
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/philo.c -o objs/philo.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/arrange_table.c -o objs/arrange_table.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/error_handling.c -o objs/error_handling.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/dinner.c -o objs/dinner.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/actions.c -o objs/actions.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/messages.c -o objs/messages.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/get_time.c -o objs/get_time.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/supervision.c -o objs/supervision.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/ft_atoi.c -o objs/ft_atoi.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/ft_atoui.c -o objs/ft_atoui.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/ft_putstr_fd.c -o objs/ft_putstr_fd.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/ft_putendl_fd.c -o objs/ft_putendl_fd.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/ft_strncmp.c -o objs/ft_strncmp.o
+gcc -Wall -Werror -Wextra -pthread -g -I incl/ -c srcs/ft_strlen.c -o objs/ft_strlen.o
+gcc -Wall -Werror -Wextra -pthread -g objs/philo.o objs/arrange_table.o objs/error_handling.o objs/dinner.o objs/actions.o objs/messages.o objs/get_time.o objs/supervision.o objs/ft_atoi.o objs/ft_atoui.o objs/ft_putstr_fd.o objs/ft_putendl_fd.o objs/ft_strncmp.o objs/ft_strlen.o -I incl/ -o philo
+echo "\033[1;32mphilo Program created\033[0m"
+make: Leaving directory '/home/jonas/42/Philosophers'
+ 

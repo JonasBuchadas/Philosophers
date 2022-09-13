@@ -1,0 +1,10 @@
+{
+	"tasks": [
+		{
+			"label": "Compile test",
+			"type": "shell",
+			"command": "make"
+		}
+	],
+	"version": "2.0.0"
+}

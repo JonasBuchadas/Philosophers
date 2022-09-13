@@ -2,7 +2,7 @@
 OS=			$(shell uname -s)
 
 ### EXECUTABLE ###
-NAME=		philo
+NAME=		philo_bonus
 
 ### COMPILATION ###
 CC=			gcc
@@ -15,7 +15,6 @@ OBJS_PATH=		objs/
 
 ### SOURCE FILES ###
 SRC_NAME=		$(NAME).c
-#SRC_BONUS=		$(NAME)_bonus.c
 SRCS=			arrange_table.c \
 				error_handling.c \
 				dinner.c \
@@ -30,14 +29,11 @@ SRCS=			arrange_table.c \
 				ft_strncmp.c \
 				ft_strlen.c
 SRCS_NAME=		$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
-#SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
 
 ### OBJECT FILES ###
 OBJ_NAME=		$(SRC_NAME:.c=.o)
-#OBJ_BONUS=		$(SRC_BONUS:.c=.o)
 OBJS=			$(SRCS:.c=.o)
 OBJS_NAME=		$(addprefix $(OBJS_PATH), $(OBJ_NAME) $(OBJS))
-#OBJS_BONUS=	$(addprefix $(OBJS_PATH), $(OBJ_BONUS) $(OBJS))
 
 ### INCLUDES ###
 INC=			-I $(INCL_PATH)
