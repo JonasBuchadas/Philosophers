@@ -12,8 +12,19 @@ void	*supervise_dinner(void *arg)
 	{
 		if (t->opt_arg == true)
 			is_finished(t);
-		someone_died(t);
+		// give_priorities(t);
+		usleep(1000);
 	}
+	return (NULL);
+}
+
+void *supervise_death(void *arg)
+{
+	t_table *t;
+
+	t = (t_table *)arg;
+	while (!(t->finish_dinner || t->thread_dead))
+		someone_died(t);
 	return (NULL);
 }
 

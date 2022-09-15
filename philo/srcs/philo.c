@@ -3,6 +3,7 @@
 static int	init_philo(t_table *table, char **argv);
 static int	set_table(t_table *t);
 static int	start_dinner(t_table *t);
+static int	create_supervision_threads(t_table *t);
 
 int	main(int argc, char **argv)
 {
@@ -75,23 +76,19 @@ static int	set_table(t_table *t)
 static int	start_dinner(t_table *t)
 {
 	int			i;
-	pthread_t	supervisor;
 
 	t->time_started = get_current_time(0);
 	i = -1;
 	while (++i < t->philo_number)
 	{
 		t->seats[i].time_started = t->time_started;
-		t->seats[i].time_eated = 0;
 		if (pthread_create(&t->seats[i].philo, NULL,
 				&dinner, &t->seats[i]) != 0)
 			return (exit_message(t, THREAD, "Error while making thread"));
 		usleep(1000);
 	}
-	if (pthread_create(&supervisor, NULL,
-			&supervise_dinner, t) != 0)
+	if (create_supervision_threads(t) != 0)
 		return (exit_message(t, THREAD, "Error while making thread"));
-	pthread_detach(supervisor);
 	i = -1;
 	while (++i < t->philo_number)
 	{
@@ -99,4 +96,20 @@ static int	start_dinner(t_table *t)
 			return (exit_message(t, THREAD, "Error while waiting thread"));
 	}
 	return (0);
+}
+
+static int create_supervision_threads(t_table *t)
+{
+	pthread_t supervisor;
+	pthread_t death;
+
+	if (pthread_create(&supervisor, NULL,
+					   &supervise_dinner, t) != 0)
+		return (exit_message(t, THREAD, "Error while making thread"));
+	if (pthread_create(&death, NULL,
+					   &supervise_death, t) != 0)
+		return (exit_message(t, THREAD, "Error while making thread"));
+	pthread_detach(supervisor);
+	pthread_detach(death);
+	return (SUCCESS);
 }

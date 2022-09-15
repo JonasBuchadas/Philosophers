@@ -5,9 +5,9 @@ static void	put_fork(t_seat *seat, int fork);
 static void	take_fork(t_seat *seat, int fork);
 static void	take_second_fork(t_seat *seat, int fork);
 
-void	eat(t_seat *seat)
+void	eating(t_seat *seat)
 {
-	if (!*seat->dead)
+	if (!(*seat->finish_dinner || *seat->dead))
 	{
 		take_forks(seat);
 		if (seat->must_eat > 0)

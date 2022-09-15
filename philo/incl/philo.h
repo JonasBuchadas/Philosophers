@@ -70,11 +70,12 @@ typedef struct s_table
 int				exit_philo(t_table *table, int error_code);
 int				exit_message(t_table *table, int error_code, char *msg);
 void			*dinner(void *arg);
-void			eat(t_seat *seat);
+void			eating(t_seat *seat);
 void			message(t_seat *seat, int status);
 long long		get_current_time(long long start_time);
 void			arrange_table(t_table *t);
 void			*supervise_dinner(void *arg);
+void			*supervise_death(void *arg);
 unsigned int	ft_atoui(const char *str);
 int				ft_atoi(const char *str);
 void			ft_putstr_fd(char *s, int fd);

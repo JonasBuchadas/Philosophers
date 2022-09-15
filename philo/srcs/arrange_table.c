@@ -21,6 +21,7 @@ static void	arrange_seats(t_table *t)
 		t->seats[i].message = &t->message;
 		t->seats[i].time_to_die = t->time_to_die;
 		t->seats[i].time_to_eat = t->time_to_eat;
+		t->seats[i].time_eated = 0;
 		t->seats[i].time_to_sleep = t->time_to_sleep;
 		t->seats[i].dead = &t->thread_dead;
 		t->seats[i].finish_dinner = &t->finish_dinner;
