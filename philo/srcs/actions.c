@@ -13,7 +13,7 @@ void	eating(t_seat *seat)
 		if (seat->must_eat > 0)
 			seat->must_eat--;
 		message(seat, EAT);
-		seat->time_eated = get_current_time(seat->time_started);
+		seat->time_eated = timestamp(seat->time_started);
 		usleep(seat->time_to_eat * 1000);
 		put_fork(seat, LEFT_FORK);
 		put_fork(seat, RIGHT_FORK);
@@ -22,10 +22,9 @@ void	eating(t_seat *seat)
 
 static void	take_forks(t_seat *seat)
 {
-	while (seat->forks_taken == false)
+	while (seat->forks_taken == false
+		&& !(*seat->finish_dinner || *seat->dead))
 	{
-		if (*seat->dead)
-			return ;
 		if (seat->id % 2 == 0)
 		{
 			take_fork(seat, LEFT_FORK);

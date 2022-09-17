@@ -1,6 +1,6 @@
 #include "philo.h"
 
-long long	get_current_time(long long start_time)
+long long	timestamp(long long start_time)
 {
 	static struct timeval	tv;
 

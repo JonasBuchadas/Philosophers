@@ -48,7 +48,7 @@ static int	init_philo(t_table *t, char **argv)
 		return (1);
 	if (t->must_eat < 0)
 		return (1);
-	return (0);
+	return (SUCCESS);
 }
 
 static int	set_table(t_table *t)
@@ -70,46 +70,54 @@ static int	set_table(t_table *t)
 		pthread_mutex_init(t->forks + i, NULL);
 	pthread_mutex_init(&t->message, NULL);
 	arrange_table(t);
-	return (0);
+	return (SUCCESS);
 }
 
 static int	start_dinner(t_table *t)
 {
 	int			i;
 
-	t->time_started = get_current_time(0);
+	t->time_started = timestamp(0);
 	i = -1;
 	while (++i < t->philo_number)
 	{
 		t->seats[i].time_started = t->time_started;
 		if (pthread_create(&t->seats[i].philo, NULL,
 				&dinner, &t->seats[i]) != 0)
-			return (exit_message(t, THREAD, "Error while making thread"));
+			return (THREAD);
 		usleep(1000);
 	}
 	if (create_supervision_threads(t) != 0)
-		return (exit_message(t, THREAD, "Error while making thread"));
+		return (THREAD);
 	i = -1;
 	while (++i < t->philo_number)
 	{
 		if (pthread_join(t->seats[i].philo, NULL) != 0)
-			return (exit_message(t, THREAD, "Error while waiting thread"));
+			return (THREAD);
 	}
-	return (0);
+	return (SUCCESS);
 }
 
-static int create_supervision_threads(t_table *t)
+static int	create_supervision_threads(t_table *t)
 {
-	pthread_t supervisor;
-	pthread_t death;
+	// pthread_t	priority_supervisor;
+	pthread_t	death_supervisor;
+	pthread_t	eat_supervisor;
 
-	if (pthread_create(&supervisor, NULL,
-					   &supervise_dinner, t) != 0)
-		return (exit_message(t, THREAD, "Error while making thread"));
-	if (pthread_create(&death, NULL,
-					   &supervise_death, t) != 0)
-		return (exit_message(t, THREAD, "Error while making thread"));
-	pthread_detach(supervisor);
-	pthread_detach(death);
+	// if (pthread_create(&priority_supervisor, NULL,
+	// 		&supervise_priority, t) != 0)
+	// 	return (exit_message(t, THREAD, "Error while making thread"));
+	if (pthread_create(&death_supervisor, NULL,
+			&supervise_death, t) != 0)
+		return (THREAD);
+	if (t->opt_arg == true)
+	{
+		if (pthread_create(&eat_supervisor, NULL,
+				&supervise_eat, t) != 0)
+			return (THREAD);
+		pthread_detach(eat_supervisor);
+	}
+	// pthread_detach(priority_supervisor);
+	pthread_detach(death_supervisor);
 	return (SUCCESS);
 }
