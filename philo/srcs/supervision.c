@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   supervision.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jocaetan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 17:25:28 by jocaetan          #+#    #+#             */
+/*   Updated: 2022/09/18 17:25:31 by jocaetan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	is_finished(t_table *t);
-static void give_priorities(t_seat *left_philo, t_seat *right_philo);
+static void	give_priorities(t_seat *left_philo, t_seat *right_philo);
 
 void	*supervise_eat(void *arg)
 {
@@ -42,7 +54,7 @@ void	*supervise_death(void *arg)
 void	*supervise_priority(void *arg)
 {
 	t_table		*t;
-	int 		i;
+	int			i;
 
 	t = (t_table *)arg;
 	while (!(t->finish_dinner || t->thread_dead))
@@ -74,15 +86,15 @@ static void	give_priorities(t_seat *left_philo, t_seat *right_philo)
 	}
 }
 
-static void is_finished(t_table *t)
+static void	is_finished(t_table *t)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < t->philo_number)
 	{
 		if (t->seats[i].must_eat != 0)
-			return;
+			return ;
 	}
 	t->finish_dinner = true;
 }

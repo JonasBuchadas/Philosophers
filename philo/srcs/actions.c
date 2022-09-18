@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jocaetan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 17:26:19 by jocaetan          #+#    #+#             */
+/*   Updated: 2022/09/18 17:26:20 by jocaetan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static void	take_forks(t_seat *seat);
@@ -46,7 +58,7 @@ static void	take_forks(t_seat *seat)
 	}
 }
 
-static void take_second_fork(t_seat *seat, int fork)
+static void	take_second_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 		take_fork(seat, LEFT_FORK);
@@ -56,7 +68,7 @@ static void take_second_fork(t_seat *seat, int fork)
 	message(seat, FORK);
 }
 
-static void take_fork(t_seat *seat, int fork)
+static void	take_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 	{
@@ -70,7 +82,7 @@ static void take_fork(t_seat *seat, int fork)
 	}
 }
 
-static void put_fork(t_seat *seat, int fork)
+static void	put_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 	{

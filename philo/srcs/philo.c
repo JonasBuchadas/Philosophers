@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jocaetan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 17:25:37 by jocaetan          #+#    #+#             */
+/*   Updated: 2022/09/18 17:48:58 by jocaetan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static int	init_philo(t_table *table, char **argv);
@@ -81,7 +93,6 @@ static int	start_dinner(t_table *t)
 	i = -1;
 	while (++i < t->philo_number)
 	{
-		t->seats[i].time_started = t->time_started;
 		if (pthread_create(&t->seats[i].philo, NULL,
 				&dinner, &t->seats[i]) != 0)
 			return (THREAD);
