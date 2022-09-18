@@ -22,29 +22,31 @@ void	eating(t_seat *seat)
 
 static void	take_forks(t_seat *seat)
 {
-	while (seat->forks_taken == false
-		&& !(*seat->finish_dinner || *seat->dead))
+	while (!seat->forks_taken && !(*seat->finish_dinner || *seat->dead))
 	{
-		if (seat->id % 2 == 0)
+		if (seat->eat_allow)
 		{
-			take_fork(seat, LEFT_FORK);
-			if (*seat->r_f_taken == false)
-				take_second_fork(seat, RIGHT_FORK);
+			if (seat->id % 2 == 0)
+			{
+				take_fork(seat, LEFT_FORK);
+				if (*seat->r_f_taken == false)
+					take_second_fork(seat, RIGHT_FORK);
+				else
+					put_fork(seat, LEFT_FORK);
+			}
 			else
-				put_fork(seat, LEFT_FORK);
-		}
-		else
-		{
-			take_fork(seat, RIGHT_FORK);
-			if (*seat->l_f_taken == false)
-				take_second_fork(seat, LEFT_FORK);
-			else
-				put_fork(seat, RIGHT_FORK);
+			{
+				take_fork(seat, RIGHT_FORK);
+				if (*seat->l_f_taken == false)
+					take_second_fork(seat, LEFT_FORK);
+				else
+					put_fork(seat, RIGHT_FORK);
+			}
 		}
 	}
 }
 
-static void	take_second_fork(t_seat *seat, int fork)
+static void take_second_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 		take_fork(seat, LEFT_FORK);
@@ -54,7 +56,7 @@ static void	take_second_fork(t_seat *seat, int fork)
 	message(seat, FORK);
 }
 
-static void	take_fork(t_seat *seat, int fork)
+static void take_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 	{
@@ -68,7 +70,7 @@ static void	take_fork(t_seat *seat, int fork)
 	}
 }
 
-static void	put_fork(t_seat *seat, int fork)
+static void put_fork(t_seat *seat, int fork)
 {
 	if (fork == LEFT_FORK)
 	{

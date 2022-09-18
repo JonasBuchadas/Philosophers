@@ -42,6 +42,7 @@ typedef struct s_seat
 	int				must_eat;
 	t_mutex			*left_fork;
 	t_mutex			*right_fork;
+	bool			eat_allow;
 	bool			*l_f_taken;
 	bool			*r_f_taken;
 	bool			forks_taken;
@@ -75,6 +76,7 @@ void			message(t_seat *seat, int status);
 long long		timestamp(long long start_time);
 void			arrange_table(t_table *t);
 void			*supervise_eat(void *arg);
+void			*supervise_priority(void *arg);
 void			*supervise_death(void *arg);
 unsigned int	ft_atoui(const char *str);
 int				ft_atoi(const char *str);
