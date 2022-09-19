@@ -14,7 +14,7 @@ void	eat(t_seat *seat)
 			seat->must_eat--;
 		message(seat, EAT);
 		seat->time_eated = get_current_time(seat->time_started);
-		usleep(seat->time_to_eat * 1000);
+		philo_sleep(seat, seat->time_to_eat);
 		put_fork(seat, LEFT_FORK);
 		put_fork(seat, RIGHT_FORK);
 	}

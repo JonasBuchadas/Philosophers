@@ -20,7 +20,11 @@ void	*dinner(void *arg)
 	t_seat	*seat;
 
 	seat = (t_seat *)arg;
-	seat->time_started = timestamp(0);
+	if (seat->id % 2)
+	{
+		thinking(seat);
+		usleep(15000);
+	}
 	while (!(*seat->finish_dinner || *seat->dead))
 	{
 		eating(seat);
@@ -35,7 +39,7 @@ static void	sleeping(t_seat *seat)
 	if (!(*seat->finish_dinner || *seat->dead))
 	{
 		message(seat, SLEEP);
-		usleep(seat->time_to_sleep * 1000);
+		philo_sleep(seat, seat->time_to_sleep);
 	}
 }
 

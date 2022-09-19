@@ -93,10 +93,10 @@ static int	start_dinner(t_table *t)
 	i = -1;
 	while (++i < t->philo_number)
 	{
+		t->seats[i].time_started = timestamp(0);
 		if (pthread_create(&t->seats[i].philo, NULL,
 				&dinner, &t->seats[i]) != 0)
 			return (THREAD);
-		usleep(1000);
 	}
 	if (create_supervision_threads(t) != 0)
 		return (THREAD);

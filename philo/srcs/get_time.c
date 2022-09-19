@@ -22,12 +22,15 @@ long long	timestamp(long long start_time)
 
 void	philo_sleep(t_seat *seat, long long msecs)
 {
+	long long	start;
 	long long	now;
-	long long	after;
 
-	now = timestamp(seat->time_started);
-	usleep(msecs * 1000);
-	after = timestamp(seat->time_started);
-	if (after != (now + (msecs * 1000LL)))
-		seat->time_started += (after - (now + (msecs * 1000LL)));
+	start = timestamp(seat->time_started);
+	while (!(*seat->finish_dinner || *seat->dead))
+	{
+		now = timestamp(seat->time_started);
+		if (now - start >= msecs)
+			break ;
+		usleep(50);
+	}
 }

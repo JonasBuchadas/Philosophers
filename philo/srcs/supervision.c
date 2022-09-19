@@ -62,7 +62,7 @@ void	*supervise_priority(void *arg)
 		i = -1;
 		while (++i < t->philo_number - 1)
 			give_priorities(t->seats + i, t->seats + (i + 1));
-		give_priorities(t->seats + 1, t->seats);
+		give_priorities(t->seats + i, t->seats);
 	}
 	return (NULL);
 }

@@ -73,6 +73,7 @@ int				exit_message(t_table *table, int error_code, char *msg);
 void			*dinner(void *arg);
 void			eating(t_seat *seat);
 void			message(t_seat *seat, int status);
+void			philo_sleep(t_seat *seat, long long msecs);
 long long		timestamp(long long start_time);
 void			arrange_table(t_table *t);
 void			*supervise_eat(void *arg);
