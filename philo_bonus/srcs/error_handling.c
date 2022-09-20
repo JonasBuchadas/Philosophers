@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jocaetan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 17:26:10 by jocaetan          #+#    #+#             */
+/*   Updated: 2022/09/18 17:26:11 by jocaetan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo_bonus.h"
 
 int			exit_philo(t_table *table, int error_code);
@@ -62,12 +74,12 @@ static void	incorrect_arg(t_table *t)
 		ft_putstr_fd("Argument [number_of_philosophers] ", 2);
 		ft_putendl_fd("must be a positive int.", 2);
 	}
-	if (t->time_to_die == 0)
-		ft_putendl_fd("Argument [time_to_die] must be unsigned int.", 2);
-	if (t->time_to_eat == 0)
-		ft_putendl_fd("Argument [time_to_eat] must be unsigned int.", 2);
-	if (t->time_to_sleep == 0)
-		ft_putendl_fd("Argument [time_to_sleep] must be unsigned int.", 2);
+	if (t->time_to_die < 1)
+		ft_putendl_fd("Argument [time_to_die] must be positive int.", 2);
+	if (t->time_to_eat < 1)
+		ft_putendl_fd("Argument [time_to_eat] must be positive int.", 2);
+	if (t->time_to_sleep < 1)
+		ft_putendl_fd("Argument [time_to_sleep] must be positive int.", 2);
 	if (t->opt_arg && t->must_eat < 1)
 	{
 		ft_putstr_fd("Argument [number_of_times_", 2);
