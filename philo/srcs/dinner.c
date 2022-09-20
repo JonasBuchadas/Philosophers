@@ -12,6 +12,7 @@
 
 #include "philo.h"
 
+static void	eating(t_seat *seat);
 static void	sleeping(t_seat *seat);
 static void	thinking(t_seat *seat);
 
@@ -32,6 +33,22 @@ void	*dinner(void *arg)
 		thinking(seat);
 	}
 	return (NULL);
+}
+
+static void	eating(t_seat *seat)
+{
+	if (!(*seat->finish_dinner || *seat->dead))
+	{
+		pthread_mutex_lock(seat->right_fork);
+		pthread_mutex_lock(seat->left_fork);
+		if (seat->must_eat > 0)
+			seat->must_eat--;
+		message(seat, EAT);
+		seat->time_eated = timestamp(seat->time_started);
+		philo_sleep(seat, seat->time_to_eat);
+		pthread_mutex_unlock(seat->left_fork);
+		pthread_mutex_unlock(seat->right_fork);
+	}
 }
 
 static void	sleeping(t_seat *seat)

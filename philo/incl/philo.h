@@ -40,14 +40,12 @@ typedef struct s_seat
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
 	int				must_eat;
-	t_mutex			*left_fork;
-	t_mutex			*right_fork;
-	bool			eat_allow;
 	bool			*l_f_taken;
 	bool			*r_f_taken;
-	bool			forks_taken;
 	bool			*dead;
 	bool			*finish_dinner;
+	t_mutex			*left_fork;
+	t_mutex			*right_fork;
 	t_mutex			*message;
 }	t_seat;
 
@@ -71,13 +69,11 @@ typedef struct s_table
 int				exit_philo(t_table *table, int error_code);
 int				exit_message(t_table *table, int error_code, char *msg);
 void			*dinner(void *arg);
-void			eating(t_seat *seat);
 void			message(t_seat *seat, int status);
 void			philo_sleep(t_seat *seat, long long msecs);
 long long		timestamp(long long start_time);
 void			arrange_table(t_table *t);
 void			*supervise_eat(void *arg);
-void			*supervise_priority(void *arg);
 void			*supervise_death(void *arg);
 unsigned int	ft_atoui(const char *str);
 int				ft_atoi(const char *str);

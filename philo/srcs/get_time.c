@@ -12,6 +12,8 @@
 
 #include "philo.h"
 
+static long long time_diff(long long present, long long past);
+
 long long	timestamp(long long start_time)
 {
 	static struct timeval	tv;
@@ -20,16 +22,19 @@ long long	timestamp(long long start_time)
 	return ((tv.tv_sec * 1000LL + tv.tv_usec / 1000) - start_time);
 }
 
+static long long time_diff(long long present, long long past)
+{
+	return (present - past);
+}
+
 void	philo_sleep(t_seat *seat, long long msecs)
 {
 	long long	start;
-	long long	now;
 
 	start = timestamp(seat->time_started);
 	while (!(*seat->finish_dinner || *seat->dead))
 	{
-		now = timestamp(seat->time_started);
-		if (now - start >= msecs)
+		if (time_diff(timestamp(seat->time_started), start) >= msecs)
 			break ;
 		usleep(50);
 	}

@@ -29,8 +29,6 @@ static void	arrange_seats(t_table *t)
 	while (++i < t->philo_number)
 	{
 		t->seats[i].id = i + 1;
-		t->seats[i].forks_taken = false;
-		t->seats[i].eat_allow = true;
 		t->seats[i].message = &t->message;
 		t->seats[i].time_to_die = t->time_to_die;
 		t->seats[i].time_to_eat = t->time_to_eat;

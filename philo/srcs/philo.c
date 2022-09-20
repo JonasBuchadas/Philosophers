@@ -111,13 +111,9 @@ static int	start_dinner(t_table *t)
 
 static int	create_supervision_threads(t_table *t)
 {
-	pthread_t	priority_supervisor;
 	pthread_t	death_supervisor;
 	pthread_t	eat_supervisor;
 
-	if (pthread_create(&priority_supervisor, NULL,
-			&supervise_priority, t) != 0)
-		return (exit_message(t, THREAD, "Error while making thread"));
 	if (pthread_create(&death_supervisor, NULL,
 			&supervise_death, t) != 0)
 		return (THREAD);
@@ -128,7 +124,6 @@ static int	create_supervision_threads(t_table *t)
 			return (THREAD);
 		pthread_detach(eat_supervisor);
 	}
-	pthread_detach(priority_supervisor);
 	pthread_detach(death_supervisor);
 	return (SUCCESS);
 }
