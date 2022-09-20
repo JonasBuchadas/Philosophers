@@ -44,21 +44,21 @@ typedef enum s_status
 
 typedef struct s_seat
 {
-	pthread_t		philo;
-	int				id;
-	long long		time_started;
-	long long		time_eated;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	int				must_eat;
-	bool			*l_f_taken;
-	bool			*r_f_taken;
-	bool			*dead;
-	bool			*finish_dinner;
-	t_mutex			*left_fork;
-	t_mutex			*right_fork;
-	t_mutex			*message;
+	pthread_t	philo;
+	int			id;
+	long long	time_started;
+	long long	time_eated;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			must_eat;
+	bool		*l_f_taken;
+	bool		*r_f_taken;
+	bool		*dead;
+	bool		*finish_dinner;
+	t_mutex		*left_fork;
+	t_mutex		*right_fork;
+	t_mutex		*message;
 }	t_seat;
 
 typedef struct s_table
@@ -87,7 +87,6 @@ long long		timestamp(long long start_time);
 void			arrange_table(t_table *t);
 void			*supervise_eat(void *arg);
 void			*supervise_death(void *arg);
-unsigned int	ft_atoui(const char *str);
 int				ft_atoi(const char *str);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);

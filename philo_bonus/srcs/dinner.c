@@ -39,15 +39,15 @@ static void	eating(t_seat *seat)
 {
 	if (!(*seat->finish_dinner || *seat->dead))
 	{
-		pthread_mutex_lock(seat->right_fork);
-		pthread_mutex_lock(seat->left_fork);
+		sem_wait(*seat->forks);
+		sem_wait(*seat->forks);
 		if (seat->must_eat > 0)
 			seat->must_eat--;
 		message(seat, EAT);
 		seat->time_eated = timestamp(seat->time_started);
 		philo_sleep(seat, seat->time_to_eat);
-		pthread_mutex_unlock(seat->left_fork);
-		pthread_mutex_unlock(seat->right_fork);
+		sem_post(*seat->forks);
+		sem_post(*seat->forks);
 	}
 }
 

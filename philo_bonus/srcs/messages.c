@@ -14,7 +14,7 @@
 
 void	message(t_seat *seat, int status)
 {
-	pthread_mutex_lock(seat->message);
+	sem_wait(*seat->message);
 	if (!*seat->dead)
 	{
 		if (status == THINKING)
@@ -33,5 +33,5 @@ void	message(t_seat *seat, int status)
 			printf("%lld %d died\n",
 				timestamp(seat->time_started), seat->id);
 	}
-	pthread_mutex_unlock(seat->message);
+	sem_post(*seat->message);
 }

@@ -54,9 +54,7 @@ static int	init_philo(t_table *t, char **argv)
 		t->opt_arg = false;
 	}
 	if (t->philo_number < 1 || t->time_to_die < 1 || t->time_to_eat < 1
-		|| t->time_to_sleep < 1)
-		return (1);
-	if (t->must_eat < 0)
+		|| t->time_to_sleep < 1 || t->must_eat < 0)
 		return (1);
 	return (SUCCESS);
 }

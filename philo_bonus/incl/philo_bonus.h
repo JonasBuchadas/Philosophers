@@ -17,6 +17,7 @@
 # include <sys/time.h>
 # include <stdbool.h>
 # include <pthread.h>
+# include <semaphore.h>
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -29,7 +30,10 @@
 # define MALLOC 1
 # define NUM_OF_ARGS 2
 # define ARGS 3
-# define THREAD 4
+# define PROCESS 4
+
+# define FORK_SEM "/forks"
+# define MESSAGE_SEM "/message"
 
 typedef pthread_mutex_t	t_mutex;
 
@@ -44,21 +48,19 @@ typedef enum s_status
 
 typedef struct s_seat
 {
-	pthread_t		philo;
-	int				id;
-	long long		time_started;
-	long long		time_eated;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	int				must_eat;
-	bool			*l_f_taken;
-	bool			*r_f_taken;
-	bool			*dead;
-	bool			*finish_dinner;
-	t_mutex			*left_fork;
-	t_mutex			*right_fork;
-	t_mutex			*message;
+	pthread_t	philo;
+	pid_t		pid;
+	int			id;
+	long long	time_started;
+	long long	time_eated;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	int			must_eat;
+	bool		*dead;
+	bool		*finish_dinner;
+	sem_t		**forks;
+	sem_t		**message;
 }	t_seat;
 
 typedef struct s_table
@@ -73,9 +75,8 @@ typedef struct s_table
 	bool		thread_dead;
 	bool		finish_dinner;
 	t_seat		*seats;
-	t_mutex		*forks;
-	t_mutex		message;
-	bool		*f_taken;
+	sem_t		*forks;
+	sem_t		*message;
 }	t_table;
 
 int				exit_philo(t_table *table, int error_code);
@@ -87,7 +88,6 @@ long long		timestamp(long long start_time);
 void			arrange_table(t_table *t);
 void			*supervise_eat(void *arg);
 void			*supervise_death(void *arg);
-unsigned int	ft_atoui(const char *str);
 int				ft_atoi(const char *str);
 void			ft_putstr_fd(char *s, int fd);
 void			ft_putendl_fd(char *s, int fd);
