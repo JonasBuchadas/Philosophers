@@ -5,7 +5,7 @@ OS=			$(shell uname -s)
 NAME=		philo
 
 ### COMPILATION ###
-CC=			clang
+CC=			gcc
 CFLAGS=		-Wall -Werror -Wextra -pthread -g
 
 ### PATHS ###
@@ -22,7 +22,6 @@ SRCS=			arrange_table.c \
 				get_time.c \
 				supervision.c \
 				ft_atoi.c \
-				ft_atoui.c \
 				ft_putstr_fd.c \
 				ft_putendl_fd.c \
 				ft_strncmp.c \

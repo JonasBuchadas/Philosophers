@@ -38,9 +38,9 @@ int	main(int argc, char **argv)
 static int	init_philo(t_table *t, char **argv)
 {
 	t->philo_number = ft_atoi(argv[1]);
-	t->time_to_die = ft_atoui(argv[2]);
-	t->time_to_eat = ft_atoui(argv[3]);
-	t->time_to_sleep = ft_atoui(argv[4]);
+	t->time_to_die = ft_atoi(argv[2]);
+	t->time_to_eat = ft_atoi(argv[3]);
+	t->time_to_sleep = ft_atoi(argv[4]);
 	t->finish_dinner = false;
 	t->thread_dead = false;
 	if (argv[5])
@@ -53,10 +53,8 @@ static int	init_philo(t_table *t, char **argv)
 		t->must_eat = 0;
 		t->opt_arg = false;
 	}
-	if (t->philo_number < 1)
-		return (1);
-	if (t->time_to_die == 0 || t->time_to_eat == 0
-		|| t->time_to_sleep == 0)
+	if (t->philo_number < 1 || t->time_to_die < 1 || t->time_to_eat < 1
+		|| t->time_to_sleep < 1)
 		return (1);
 	if (t->must_eat < 0)
 		return (1);

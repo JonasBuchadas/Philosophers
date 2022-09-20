@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jocaetan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/18 17:25:44 by jocaetan          #+#    #+#             */
+/*   Updated: 2022/09/18 17:37:18 by jocaetan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
@@ -51,19 +63,19 @@ typedef struct s_seat
 
 typedef struct s_table
 {
-	int				philo_number;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	long long		time_started;
-	int				must_eat;
-	bool			opt_arg;
-	bool			thread_dead;
-	bool			finish_dinner;
-	t_seat			*seats;
-	t_mutex			*forks;
-	t_mutex			message;
-	bool			*f_taken;
+	int			philo_number;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+	long long	time_started;
+	int			must_eat;
+	bool		opt_arg;
+	bool		thread_dead;
+	bool		finish_dinner;
+	t_seat		*seats;
+	t_mutex		*forks;
+	t_mutex		message;
+	bool		*f_taken;
 }	t_table;
 
 int				exit_philo(t_table *table, int error_code);

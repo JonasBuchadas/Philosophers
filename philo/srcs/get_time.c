@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static long long time_diff(long long present, long long past);
+static long long	time_diff(long long present, long long past);
 
 long long	timestamp(long long start_time)
 {
@@ -22,7 +22,7 @@ long long	timestamp(long long start_time)
 	return ((tv.tv_sec * 1000LL + tv.tv_usec / 1000) - start_time);
 }
 
-static long long time_diff(long long present, long long past)
+static long long	time_diff(long long present, long long past)
 {
 	return (present - past);
 }
