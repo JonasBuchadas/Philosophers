@@ -15,7 +15,7 @@
 void	message(t_seat *seat, int status)
 {
 	pthread_mutex_lock(seat->message);
-	if (!*seat->dead)
+	if (!end_dinner(seat))
 	{
 		if (status == THINKING)
 			printf("%lld %d is thinking\n",

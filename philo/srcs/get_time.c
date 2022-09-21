@@ -32,7 +32,7 @@ void	philo_sleep(t_seat *seat, long long msecs)
 	long long	start;
 
 	start = timestamp(seat->time_started);
-	while (!(*seat->finish_dinner || *seat->dead))
+	while (!end_dinner(seat))
 	{
 		if (time_diff(timestamp(seat->time_started), start) >= msecs)
 			break ;

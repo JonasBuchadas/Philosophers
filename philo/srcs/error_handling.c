@@ -64,6 +64,7 @@ static void	free_table(t_table *table)
 		pthread_mutex_destroy(&table->message);
 		pthread_mutex_destroy(&table->time);
 		pthread_mutex_destroy(&table->death);
+		pthread_mutex_destroy(&table->all_eat);
 		free(table);
 	}
 	return ;

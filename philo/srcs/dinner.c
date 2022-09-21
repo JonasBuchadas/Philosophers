@@ -26,7 +26,7 @@ void	*dinner(void *arg)
 		thinking(seat);
 		usleep(15000);
 	}
-	while (!(*seat->finish_dinner || *seat->dead))
+	while (!end_dinner(seat))
 	{
 		eating(seat);
 		sleeping(seat);
@@ -57,7 +57,7 @@ static void	eating(t_seat *seat)
 
 static void	sleeping(t_seat *seat)
 {
-	if (!(*seat->finish_dinner || *seat->dead))
+	if (!end_dinner(seat))
 	{
 		message(seat, SLEEP);
 		philo_sleep(seat, seat->time_to_sleep);
@@ -66,7 +66,7 @@ static void	sleeping(t_seat *seat)
 
 static void	thinking(t_seat *seat)
 {
-	if (!(*seat->finish_dinner || *seat->dead))
+	if (!end_dinner(seat))
 		message(seat, THINKING);
 }
 
