@@ -77,6 +77,9 @@ static int	set_table(t_table *t)
 	while (++i < t->philo_number)
 		pthread_mutex_init(t->forks + i, NULL);
 	pthread_mutex_init(&t->message, NULL);
+	pthread_mutex_init(&t->time, NULL);
+	pthread_mutex_init(&t->all_eat, NULL);
+	pthread_mutex_init(&t->death, NULL);
 	arrange_table(t);
 	return (SUCCESS);
 }

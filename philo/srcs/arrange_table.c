@@ -30,6 +30,9 @@ static void	arrange_seats(t_table *t)
 	{
 		t->seats[i].id = i + 1;
 		t->seats[i].message = &t->message;
+		t->seats[i].time = &t->time;
+		t->seats[i].death = &t->death;
+		t->seats[i].all_eat = &t->all_eat;
 		t->seats[i].time_to_die = t->time_to_die;
 		t->seats[i].time_to_eat = t->time_to_eat;
 		t->seats[i].time_eated = 0;

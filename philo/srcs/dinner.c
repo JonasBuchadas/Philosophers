@@ -37,14 +37,18 @@ void	*dinner(void *arg)
 
 static void	eating(t_seat *seat)
 {
-	if (!(*seat->finish_dinner || *seat->dead))
+	if (seat->left_fork == seat->right_fork)
+		philo_sleep(seat, seat->time_to_die);
+	if (!end_dinner(seat))
 	{
 		pthread_mutex_lock(seat->right_fork);
 		pthread_mutex_lock(seat->left_fork);
 		if (seat->must_eat > 0)
 			seat->must_eat--;
 		message(seat, EAT);
+		pthread_mutex_lock(seat->time);
 		seat->time_eated = timestamp(seat->time_started);
+		pthread_mutex_unlock(seat->time);
 		philo_sleep(seat, seat->time_to_eat);
 		pthread_mutex_unlock(seat->left_fork);
 		pthread_mutex_unlock(seat->right_fork);
@@ -64,4 +68,20 @@ static void	thinking(t_seat *seat)
 {
 	if (!(*seat->finish_dinner || *seat->dead))
 		message(seat, THINKING);
+}
+
+bool	end_dinner(t_seat *seat)
+{
+	bool	finish_dinner;
+	bool	philo_died;
+
+	pthread_mutex_lock(seat->death);
+	philo_died = *seat->dead;
+	pthread_mutex_unlock(seat->death);
+	pthread_mutex_lock(seat->all_eat);
+	finish_dinner = *seat->finish_dinner;
+	pthread_mutex_unlock(seat->all_eat);
+	if ((finish_dinner || philo_died))
+		return (true);
+	return (false);
 }

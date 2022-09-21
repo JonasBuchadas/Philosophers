@@ -62,6 +62,8 @@ static void	free_table(t_table *table)
 		if (table->f_taken)
 			free(table->f_taken);
 		pthread_mutex_destroy(&table->message);
+		pthread_mutex_destroy(&table->time);
+		pthread_mutex_destroy(&table->death);
 		free(table);
 	}
 	return ;

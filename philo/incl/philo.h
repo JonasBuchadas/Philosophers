@@ -59,6 +59,9 @@ typedef struct s_seat
 	t_mutex		*left_fork;
 	t_mutex		*right_fork;
 	t_mutex		*message;
+	t_mutex		*time;
+	t_mutex		*death;
+	t_mutex		*all_eat;
 }	t_seat;
 
 typedef struct s_table
@@ -75,12 +78,16 @@ typedef struct s_table
 	t_seat		*seats;
 	t_mutex		*forks;
 	t_mutex		message;
+	t_mutex		time;
+	t_mutex		death;
+	t_mutex		all_eat;
 	bool		*f_taken;
 }	t_table;
 
 int				exit_philo(t_table *table, int error_code);
 int				exit_message(t_table *table, int error_code, char *msg);
 void			*dinner(void *arg);
+bool			end_dinner(t_seat *seat);
 void			message(t_seat *seat, int status);
 void			philo_sleep(t_seat *seat, long long msecs);
 long long		timestamp(long long start_time);

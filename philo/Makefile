@@ -6,7 +6,7 @@ NAME=		philo
 
 ### COMPILATION ###
 CC=			gcc
-CFLAGS=		-Wall -Werror -Wextra -pthread -g
+CFLAGS=		-Wall -Werror -Wextra -pthread -g #-fsanitize=thread
 
 ### PATHS ###
 INCL_PATH=		incl/
