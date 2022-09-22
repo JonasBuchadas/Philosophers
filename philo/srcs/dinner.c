@@ -43,8 +43,10 @@ static void	eating(t_seat *seat)
 	{
 		pthread_mutex_lock(seat->right_fork);
 		pthread_mutex_lock(seat->left_fork);
+		pthread_mutex_lock(seat->all_eat);
 		if (seat->must_eat > 0)
 			seat->must_eat--;
+		pthread_mutex_unlock(seat->all_eat);
 		message(seat, EAT);
 		pthread_mutex_lock(seat->time);
 		seat->time_eated = timestamp(seat->time_started);

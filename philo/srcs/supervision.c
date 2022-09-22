@@ -13,7 +13,7 @@
 #include "philo.h"
 
 static bool	is_finished(t_table *t);
-static void	all_philo_eated(t_table *t);
+static bool	all_philo_eated(t_table *t);
 
 void	*supervise_eat(void *arg)
 {
@@ -22,8 +22,8 @@ void	*supervise_eat(void *arg)
 	t = (t_table *)arg;
 	while (!is_finished(t))
 	{
-		all_philo_eated(t);
-		usleep(1000);
+		if (all_philo_eated(t))
+			return (NULL);
 	}
 	return (NULL);
 }
@@ -52,12 +52,11 @@ void	*supervise_death(void *arg)
 				return (NULL);
 			}
 		}
-		usleep(1000);
 	}
 	return (NULL);
 }
 
-static void	all_philo_eated(t_table *t)
+static bool	all_philo_eated(t_table *t)
 {
 	int	i;
 	int must_eat;
@@ -69,11 +68,12 @@ static void	all_philo_eated(t_table *t)
 		must_eat = t->seats[i].must_eat;
 		pthread_mutex_unlock(&t->all_eat);
 		if (must_eat != 0)
-			return ;
+			return (false);
 	}
 	pthread_mutex_lock(&t->all_eat);
 	t->finish_dinner = true;
 	pthread_mutex_unlock(&t->all_eat);
+	return (true);
 }
 
 static bool	is_finished(t_table *t)

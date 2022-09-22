@@ -6,7 +6,7 @@ NAME=		philo
 
 ### COMPILATION ###
 CC=			gcc
-CFLAGS=		-Wall -Werror -Wextra -pthread -g -fsanitize=thread
+CFLAGS=		-Wall -Werror -Wextra -pthread -g #-fsanitize=thread
 
 ### PATHS ###
 INCL_PATH=		incl/
@@ -18,6 +18,7 @@ SRC_NAME=		$(NAME).c
 SRCS=			arrange_table.c \
 				error_handling.c \
 				dinner.c \
+				forks.c \
 				messages.c \
 				get_time.c \
 				supervision.c \

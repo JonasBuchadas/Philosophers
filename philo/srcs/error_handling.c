@@ -48,6 +48,7 @@ static void	free_table(t_table *table)
 {
 	int	i;
 
+	usleep(1000);
 	if (table != NULL)
 	{
 		if (table->forks)
