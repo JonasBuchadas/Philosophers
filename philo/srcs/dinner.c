@@ -15,6 +15,7 @@
 static void	eating(t_seat *seat);
 static void	sleeping(t_seat *seat);
 static void	thinking(t_seat *seat);
+static void take_forks(t_seat *seat);
 
 void	*dinner(void *arg)
 {
@@ -41,8 +42,7 @@ static void	eating(t_seat *seat)
 		philo_sleep(seat, seat->time_to_die);
 	if (!end_dinner(seat))
 	{
-		pthread_mutex_lock(seat->right_fork);
-		pthread_mutex_lock(seat->left_fork);
+		take_forks(seat);
 		pthread_mutex_lock(seat->all_eat);
 		if (seat->must_eat > 0)
 			seat->must_eat--;
@@ -54,6 +54,20 @@ static void	eating(t_seat *seat)
 		philo_sleep(seat, seat->time_to_eat);
 		pthread_mutex_unlock(seat->left_fork);
 		pthread_mutex_unlock(seat->right_fork);
+	}
+}
+
+static void take_forks(t_seat *seat)
+{
+	if (seat->id % 2 == 0)
+	{
+		pthread_mutex_lock(seat->right_fork);
+		pthread_mutex_lock(seat->left_fork);
+	}
+	else
+	{
+		pthread_mutex_lock(seat->left_fork);
+		pthread_mutex_lock(seat->right_fork);
 	}
 }
 
