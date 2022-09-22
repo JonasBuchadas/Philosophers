@@ -12,7 +12,6 @@
 
 #include "philo.h"
 
-int			exit_philo(t_table *table, int error_code);
 int			exit_message(t_table *table, int error_code, char *msg);
 static void	free_table(t_table *table);
 static void	incorrect_arg(t_table *t);
@@ -91,4 +90,20 @@ static void	incorrect_arg(t_table *t)
 		ft_putendl_fd("must be a positive int", 2);
 	}
 	return ;
+}
+
+bool	end_dinner(t_seat *seat)
+{
+	bool	finish_dinner;
+	bool	philo_died;
+
+	pthread_mutex_lock(seat->death);
+	philo_died = *seat->dead;
+	pthread_mutex_unlock(seat->death);
+	pthread_mutex_lock(seat->all_eat);
+	finish_dinner = *seat->finish_dinner;
+	pthread_mutex_unlock(seat->all_eat);
+	if ((finish_dinner || philo_died))
+		return (true);
+	return (false);
 }

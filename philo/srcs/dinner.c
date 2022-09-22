@@ -15,7 +15,7 @@
 static void	eating(t_seat *seat);
 static void	sleeping(t_seat *seat);
 static void	thinking(t_seat *seat);
-static void take_forks(t_seat *seat);
+static void	take_forks(t_seat *seat);
 
 void	*dinner(void *arg)
 {
@@ -57,7 +57,7 @@ static void	eating(t_seat *seat)
 	}
 }
 
-static void take_forks(t_seat *seat)
+static void	take_forks(t_seat *seat)
 {
 	if (seat->id % 2 == 0)
 	{
@@ -84,20 +84,4 @@ static void	thinking(t_seat *seat)
 {
 	if (!end_dinner(seat))
 		message(seat, THINKING);
-}
-
-bool	end_dinner(t_seat *seat)
-{
-	bool	finish_dinner;
-	bool	philo_died;
-
-	pthread_mutex_lock(seat->death);
-	philo_died = *seat->dead;
-	pthread_mutex_unlock(seat->death);
-	pthread_mutex_lock(seat->all_eat);
-	finish_dinner = *seat->finish_dinner;
-	pthread_mutex_unlock(seat->all_eat);
-	if ((finish_dinner || philo_died))
-		return (true);
-	return (false);
 }

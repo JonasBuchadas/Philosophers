@@ -59,7 +59,7 @@ void	*supervise_death(void *arg)
 static bool	all_philo_eated(t_table *t)
 {
 	int	i;
-	int must_eat;
+	int	must_eat;
 
 	i = -1;
 	while (++i < t->philo_number)
