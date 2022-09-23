@@ -14,6 +14,7 @@
 
 static bool	is_finished(t_table *t);
 static bool	all_philo_eated(t_table *t);
+static void	kill_philo(t_table *t, int i);
 
 void	*supervise_eat(void *arg)
 {
@@ -32,7 +33,6 @@ void	*supervise_death(void *arg)
 {
 	t_table		*t;
 	int			i;
-	long long	time_eated;
 
 	t = (t_table *)arg;
 	while (!is_finished(t))
@@ -41,19 +41,31 @@ void	*supervise_death(void *arg)
 		while (++i < t->philo_number)
 		{
 			pthread_mutex_lock(&t->time);
-			time_eated = t->seats[i].time_eated;
-			pthread_mutex_unlock(&t->time);
-			if (timestamp(t->time_started) - time_eated > t->time_to_die)
+			if (timestamp(t->time_started) - t->seats[i].time_eated
+				> t->time_to_die)
 			{
-				message(t->seats + i, DEATH);
-				pthread_mutex_lock(&t->death);
-				t->thread_dead = true;
-				pthread_mutex_unlock(&t->death);
+				pthread_mutex_unlock(&t->time);
+				kill_philo(t, i);
 				return (NULL);
 			}
+			pthread_mutex_unlock(&t->time);
 		}
 	}
 	return (NULL);
+}
+
+static void	kill_philo(t_table *t, int i)
+{
+	if (!is_finished(t))
+	{
+		pthread_mutex_lock(&t->message);
+		printf("%lld %d died\n",
+			timestamp(t->time_started), i + 1);
+		pthread_mutex_unlock(&t->message);
+		pthread_mutex_lock(&t->death);
+		t->thread_dead = true;
+		pthread_mutex_unlock(&t->death);
+	}
 }
 
 static bool	all_philo_eated(t_table *t)
@@ -81,12 +93,12 @@ static bool	is_finished(t_table *t)
 	bool	finish_dinner;
 	bool	philo_died;
 
-	pthread_mutex_lock(&t->death);
-	philo_died = t->thread_dead;
-	pthread_mutex_unlock(&t->death);
 	pthread_mutex_lock(&t->all_eat);
 	finish_dinner = t->finish_dinner;
 	pthread_mutex_unlock(&t->all_eat);
+	pthread_mutex_lock(&t->death);
+	philo_died = t->thread_dead;
+	pthread_mutex_unlock(&t->death);
 	if ((finish_dinner || philo_died))
 		return (true);
 	return (false);

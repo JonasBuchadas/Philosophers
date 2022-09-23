@@ -33,15 +33,6 @@
 
 typedef pthread_mutex_t	t_mutex;
 
-typedef enum s_status
-{
-	THINKING,
-	FORK,
-	EAT,
-	SLEEP,
-	DEATH
-}	t_status;
-
 typedef struct s_seat
 {
 	pthread_t	philo;
@@ -88,7 +79,6 @@ int				exit_philo(t_table *table, int error_code);
 int				exit_message(t_table *table, int error_code, char *msg);
 void			*dinner(void *arg);
 bool			end_dinner(t_seat *seat);
-void			message(t_seat *seat, int status);
 void			philo_sleep(t_seat *seat, long long msecs);
 long long		timestamp(long long start_time);
 void			arrange_table(t_table *t);

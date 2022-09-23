@@ -18,7 +18,6 @@ SRC_NAME=		$(NAME).c
 SRCS=			arrange_table.c \
 				error_handling.c \
 				dinner.c \
-				messages.c \
 				get_time.c \
 				supervision.c \
 				ft_atoi.c \
