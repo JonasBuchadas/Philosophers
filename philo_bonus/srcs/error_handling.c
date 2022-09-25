@@ -33,6 +33,8 @@ int	exit_philo(t_table *table, int error_code)
 	}
 	if (error_code == ARGS)
 		incorrect_arg(table);
+	if (error_code == PROCESS)
+		ft_putendl_fd("Error while making process", 2);
 	free_table(table);
 	return (error_code);
 }

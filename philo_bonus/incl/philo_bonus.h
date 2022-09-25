@@ -26,11 +26,13 @@
 
 # define LEFT_FORK 0
 # define RIGHT_FORK 1
+# define PHILO_PROCESS 0
 # define SUCCESS 0
 # define MALLOC 1
 # define NUM_OF_ARGS 2
 # define ARGS 3
 # define PROCESS 4
+# define THREAD 5
 
 # define FORK_SEM "/forks"
 # define MESSAGE_SEM "/message"
