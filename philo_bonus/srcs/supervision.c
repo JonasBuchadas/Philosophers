@@ -12,53 +12,83 @@
 
 #include "philo_bonus.h"
 
-static void	is_finished(t_table *t);
+static bool is_finished(t_seat *s);
+static void	kill_philo(t_seat *s);
+static bool all_eated(t_seat *seat);
 
 void	*supervise_eat(void *arg)
 {
-	t_table	*t;
+	t_seat	*seat;
 
-	t = (t_table *)arg;
-	while (!(t->finish_dinner || t->thread_dead))
+	seat = (t_seat *)arg;
+	while (!is_finished(seat))
 	{
-		is_finished(t);
-		usleep(1000);
+		if (all_eated(seat))
+			return (NULL);
 	}
 	return (NULL);
 }
 
 void	*supervise_death(void *arg)
 {
-	t_table	*t;
 	t_seat	*s;
-	int		i;
 
-	t = (t_table *)arg;
-	while (!(t->finish_dinner || t->thread_dead))
+	s = (t_seat *)arg;
+	while (!is_finished(s))
 	{
-		i = -1;
-		while (++i < t->philo_number)
+		sem_wait(*s->time);
+		if (timestamp(s->time_started) - s->time_eated > s->time_to_die)
 		{
-			s = t->seats + i;
-			if (timestamp(s->time_started) - s->time_eated > s->time_to_die)
-			{
-				message(s, DEATH);
-				t->thread_dead = true;
-			}
+			sem_post(*s->time);
+			kill_philo(s);
+			return (NULL);
 		}
+		sem_post(*s->time);
 	}
 	return (NULL);
 }
 
-static void	is_finished(t_table *t)
+static void	kill_philo(t_seat *s)
 {
-	int	i;
-
-	i = -1;
-	while (++i < t->philo_number)
+	if (!is_finished(s))
 	{
-		if (t->seats[i].must_eat != 0)
-			return ;
+		sem_wait(*s->message);
+		printf("%lld %d died\n",
+			timestamp(s->time_started), s->id);
+		sem_post(*s->message);
+		sem_wait(*s->death);
+		*s->dead = true;
+		sem_post(*s->death);
 	}
-	t->finish_dinner = true;
+}
+
+static bool all_eated(t_seat *seat)
+{
+	int must_eat;
+
+	sem_wait(*seat->all_eat);
+	must_eat = seat->must_eat;
+	sem_post(*seat->all_eat);
+	if (must_eat != 0)
+		return (false);
+	sem_wait(*seat->all_eat);
+	*seat->finish_dinner = true;
+	sem_post(*seat->all_eat);
+	return (true);
+}
+
+static bool is_finished(t_seat *s)
+{
+	bool finish_dinner;
+	bool philo_died;
+
+	sem_wait(*s->all_eat);
+	finish_dinner = s->finish_dinner;
+	sem_post(*s->all_eat);
+	sem_wait(*s->death);
+	philo_died = *s->dead;
+	sem_post(*s->death);
+	if ((finish_dinner || philo_died))
+		return (true);
+	return (false);
 }

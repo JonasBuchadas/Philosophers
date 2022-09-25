@@ -52,8 +52,14 @@ static void	free_table(t_table *table)
 	{
 		sem_close(table->forks);
 		sem_close(table->message);
+		sem_close(table->time);
+		sem_close(table->all_eat);
+		sem_close(table->death);
 		sem_unlink(FORK_SEM);
 		sem_unlink(MESSAGE_SEM);
+		sem_unlink(TIME_SEM);
+		sem_unlink(DEATH_SEM);
+		sem_unlink(ALL_EAT_SEM);
 		if (table->seats)
 			free(table->seats);
 		free(table);
@@ -81,4 +87,20 @@ static void	incorrect_arg(t_table *t)
 		ft_putendl_fd("must be a positive int", 2);
 	}
 	return ;
+}
+
+bool	end_dinner(t_seat *seat)
+{
+	bool	finish_dinner;
+	bool	philo_died;
+
+	sem_wait(*seat->death);
+	philo_died = *seat->dead;
+	sem_post(*seat->death);
+	sem_wait(*seat->all_eat);
+	finish_dinner = *seat->finish_dinner;
+	sem_post(*seat->all_eat);
+	if ((finish_dinner || philo_died))
+		return (true);
+	return (false);
 }

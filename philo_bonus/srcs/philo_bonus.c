@@ -15,7 +15,6 @@
 static int	init_philo(t_table *table, char **argv);
 static int	set_table(t_table *t);
 static int	start_dinner(t_table *t);
-static int	create_supervision_threads(t_table *t);
 
 int	main(int argc, char **argv)
 {
@@ -67,10 +66,22 @@ static int	set_table(t_table *t)
 {
 	sem_unlink(FORK_SEM);
 	sem_unlink(MESSAGE_SEM);
+	sem_unlink(TIME_SEM);
+	sem_unlink(DEATH_SEM);
+	sem_unlink(ALL_EAT_SEM);
 	t->forks = sem_open(FORK_SEM, O_CREAT, S_IRWXU, t->philo_number);
 	if (!t->forks)
 		return (MALLOC);
 	t->message = sem_open(MESSAGE_SEM, O_CREAT, S_IRWXU, 1);
+	if (!t->message)
+		return (MALLOC);
+	t->message = sem_open(TIME_SEM, O_CREAT, S_IRWXU, 1);
+	if (!t->message)
+		return (MALLOC);
+	t->message = sem_open(DEATH_SEM, O_CREAT, S_IRWXU, 1);
+	if (!t->message)
+		return (MALLOC);
+	t->message = sem_open(ALL_EAT_SEM, O_CREAT, S_IRWXU, 1);
 	if (!t->message)
 		return (MALLOC);
 	t->seats = (t_seat *)malloc(sizeof(t_seat) * t->philo_number);
@@ -92,35 +103,7 @@ static int	start_dinner(t_table *t)
 		if (t->seats[i].pid == -1)
 			return (PROCESS);
 		if (t->seats[i].pid == PHILO_PROCESS)
-		{
-			t->seats[i].time_started = timestamp(0);
-			if (pthread_create(&t->seats[i].philo, NULL,
-					&dinner, &t->seats[i]) != 0)
-				return (THREAD);
-			if (create_supervision_threads(t) != 0)
-				return (THREAD);
-		}
-		if (pthread_join(t->seats[i].philo, NULL) != 0)
-			return (THREAD);
+			process_dinner(t->seats + i);
 	}
-	return (SUCCESS);
-}
-
-static int	create_supervision_threads(t_table *t)
-{
-	pthread_t	death_supervisor;
-	pthread_t	eat_supervisor;
-
-	if (pthread_create(&death_supervisor, NULL,
-			&supervise_death, t) != 0)
-		return (THREAD);
-	if (t->opt_arg == true)
-	{
-		if (pthread_create(&eat_supervisor, NULL,
-				&supervise_eat, t) != 0)
-			return (THREAD);
-		pthread_detach(eat_supervisor);
-	}
-	pthread_detach(death_supervisor);
 	return (SUCCESS);
 }

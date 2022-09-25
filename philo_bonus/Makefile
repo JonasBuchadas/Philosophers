@@ -17,6 +17,7 @@ OBJS_PATH=		objs/
 SRC_NAME=		$(NAME).c
 SRCS=			arrange_table.c \
 				error_handling.c \
+				process_dinner.c \
 				dinner.c \
 				messages.c \
 				get_time.c \

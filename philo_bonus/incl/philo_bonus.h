@@ -36,6 +36,9 @@
 
 # define FORK_SEM "/forks"
 # define MESSAGE_SEM "/message"
+# define TIME_SEM "/time"
+# define DEATH_SEM "/death"
+# define ALL_EAT_SEM "/all_eat"
 
 typedef pthread_mutex_t	t_mutex;
 
@@ -50,7 +53,6 @@ typedef enum s_status
 
 typedef struct s_seat
 {
-	pthread_t	philo;
 	pid_t		pid;
 	int			id;
 	long long	time_started;
@@ -61,8 +63,14 @@ typedef struct s_seat
 	int			must_eat;
 	bool		*dead;
 	bool		*finish_dinner;
+	pthread_t	death_supervisor;
+	pthread_t	eat_supervisor;
 	sem_t		**forks;
 	sem_t		**message;
+	sem_t		**time;
+	sem_t		**death;
+	sem_t		**all_eat;
+	
 }	t_seat;
 
 typedef struct s_table
@@ -79,11 +87,16 @@ typedef struct s_table
 	t_seat		*seats;
 	sem_t		*forks;
 	sem_t		*message;
+	sem_t		*time;
+	sem_t		*death;
+	sem_t		*all_eat;
 }	t_table;
 
 int				exit_philo(t_table *table, int error_code);
 int				exit_message(t_table *table, int error_code, char *msg);
-void			*dinner(void *arg);
+int				process_dinner(t_seat *seat);
+int				dinner(t_seat *seat);
+bool			end_dinner(t_seat *seat);
 void			message(t_seat *seat, int status);
 void			philo_sleep(t_seat *seat, long long msecs);
 long long		timestamp(long long start_time);
